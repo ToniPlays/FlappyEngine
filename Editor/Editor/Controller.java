@@ -3,10 +3,10 @@ package Editor;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+import ComponentSystem.FlappyComponent;
+import Core.FlappyEngine;
 import Entity.Object;
-import MainCore.FlappyComponent;
-import MainCore.FlappyEngine;
-import Renderers.Scene;
+import Entity.Scene;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

@@ -1,7 +1,7 @@
 package Editor;
 	
 
-import MainCore.FlappyEngine;
+import Core.FlappyEngine;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +15,7 @@ public class Editor extends Application implements Runnable {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			primaryStage.setOnCloseRequest(event -> FlappyEngine.log("Application closed by Editor", FlappyEngine.ERROR));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Editor.fxml"));
 			Scene scene = new Scene(loader.load(), 800, 600);
 			controller = (Controller) loader.getController();
