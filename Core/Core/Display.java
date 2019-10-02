@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import ComponentSystem.Color;
 import EventSystem.Input;
+import Maths.Matrix4;
 import Maths.Vector2;
 import Maths.Vector3;
 
@@ -18,17 +19,17 @@ public class Display {
 	long window;
 	private boolean wasResized = false;
 	Input input;
-	
+	GLFWVidMode mode;
 	
 	public Display(Vector2 size) {
 		this.size = size;
-		//Init GLFW
 		
+		//Init GLFW
 		if(!glfwInit()) {
 			FlappyEngine.log("Unable to init GLFW", FlappyEngine.ERROR);
 		}
 		
-		GLFWVidMode mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		window = glfwCreateWindow((int) size.x, (int) size.y, FlappyEngine.VERSION, 0, 0);
 		glfwSetWindowPos(window, (mode.width() - (int) size.x) / 2, (mode.height() - (int) size.y) / 2);
 		glfwMakeContextCurrent(window);
@@ -44,6 +45,8 @@ public class Display {
 	}
 	
 	public void createCallbacks() {
+		Matrix4.projection(70f, size.x / size.y, 0f, 1000f);
+		
 		GLFWWindowSizeCallback resizeCallback = new GLFWWindowSizeCallback() {
 			
 			@Override
@@ -51,11 +54,13 @@ public class Display {
 				wasResized = true;
 				size.x = x;
 				size.y = y;
+				Matrix4.projection(70f, size.x / size.y, 0.1f, 1000f);
 			}
 		};
 		glfwSetWindowSizeCallback(window, resizeCallback);
 		input = new Input();
 		glfwSetKeyCallback(window, input);
+		FlappyEngine.log("Created callbacks", FlappyEngine.LOG);
 	}
 	
 	public void update() {
@@ -85,14 +90,27 @@ public class Display {
 	public void swapBuffers() {
 		glfwSwapBuffers(window);
 	}
+	
 	public void setClearColor(Color color) {
 		Vector3 c = color.getColor();
 		GL11.glClearColor(c.x, c.y, c.z, 1.0f);
 	}
+	
 	public void setClearColor(Vector3 c) {
 		GL11.glClearColor(c.x, c.y, c.z, 1.0f);
 	}
+	
 	public void setTitle(String title) {
 		glfwSetWindowTitle(window, title);
+	}
+
+	public void setFullscreen(boolean isFullscreen) {
+		if(isFullscreen) {
+			glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, (int) size.x, (int) size.y, 0);
+		}
+		else {
+			
+			glfwSetWindowMonitor(window, 0, (mode.width() - (int) size.x) / 2, (mode.height() - (int) size.y) / 2, mode.width(), mode.height(), 0);
+		}
 	} 
 }

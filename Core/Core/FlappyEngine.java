@@ -2,6 +2,7 @@ package Core;
 
 import Editor.Editor;
 import Entity.Scene;
+import Maths.Matrix4;
 import Maths.Vector2;
 
 public class FlappyEngine implements Runnable {
@@ -18,6 +19,7 @@ public class FlappyEngine implements Runnable {
 	//Initialize engine and start
 	float time = 0;
 	int frames = 0;
+	static boolean isFullscreen = false;
 	
 	public FlappyEngine(GameLoop game) {
 		loop = game;
@@ -52,6 +54,8 @@ public class FlappyEngine implements Runnable {
 		cleanUp();
 	}
 	public void update() {
+		display.update();
+		
 		time += Time.deltaTime;
 		frames++;
 		
@@ -62,7 +66,6 @@ public class FlappyEngine implements Runnable {
 		}
 		currentScene.Update();
 		loop.Update();
-		display.update();
 	}
 	public void render() {
 		
@@ -92,5 +95,19 @@ public class FlappyEngine implements Runnable {
 	}
 	public static void setTitle(String title) {
 		display.setTitle(VERSION + " | " + title);
+	}
+
+	public static void setFullscreen(boolean mode) {
+		isFullscreen = mode;
+		display.setFullscreen(isFullscreen);
+	}
+
+	public static boolean fullscreen() {
+		return isFullscreen;
+	}
+
+	public static Matrix4 getProjection() {
+		float ar = display.size.x / display.size.y;
+		return Matrix4.projection(70f, ar, 0.1f, 1000f);
 	}
 }
