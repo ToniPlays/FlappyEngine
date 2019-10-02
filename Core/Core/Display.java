@@ -92,4 +92,7 @@ public class Display {
 	public void setClearColor(Vector3 c) {
 		GL11.glClearColor(c.x, c.y, c.z, 1.0f);
 	}
+	public void setTitle(String title) {
+		glfwSetWindowTitle(window, title);
+	} 
 }

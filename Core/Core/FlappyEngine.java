@@ -13,9 +13,11 @@ public class FlappyEngine implements Runnable {
 	Thread gameThread;
 	
 	GameLoop loop;
-	Display display;
+	private static Display display;
 	static Scene currentScene;
 	//Initialize engine and start
+	float time = 0;
+	int frames = 0;
 	
 	public FlappyEngine(GameLoop game) {
 		loop = game;
@@ -35,21 +37,35 @@ public class FlappyEngine implements Runnable {
 	@Override
 	public void run() {
 		start();
-		
+		long startTime = System.currentTimeMillis();
+		long frameTime = 0;
+				
 		while(!display.isCloseRequested()) {
+			
+			startTime = System.currentTimeMillis(); 
+			Time.deltaTime = (startTime - frameTime);
+			
 			update();
 			render();
+			frameTime = startTime;
 		}
-		
 		cleanUp();
 	}
 	public void update() {
+		time += Time.deltaTime;
+		frames++;
 		
+		if(time > 200) {
+			setTitle("Fps: " + frames * 5);
+			time = 0;
+			frames = 0;
+		}
 		currentScene.Update();
 		loop.Update();
 		display.update();
 	}
 	public void render() {
+		
 		currentScene.Render();
 		loop.Render();
 		display.swapBuffers();
@@ -73,5 +89,8 @@ public class FlappyEngine implements Runnable {
 			System.exit(0);
 		}
 		else System.out.println(log);
+	}
+	public static void setTitle(String title) {
+		display.setTitle(VERSION + " | " + title);
 	}
 }
