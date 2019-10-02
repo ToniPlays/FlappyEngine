@@ -1,6 +1,9 @@
 package Maths;
 
 public class Vector3 {
+	public static final Vector3 ZERO = new Vector3(0, 0, 0);
+	public static final Vector3 ONE = new Vector3(1, 1, 1);
+	
 	public float x;
 	public float y;
 	public float z;

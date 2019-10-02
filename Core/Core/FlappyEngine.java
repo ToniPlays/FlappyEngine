@@ -8,7 +8,7 @@ public class FlappyEngine implements Runnable {
 
 	public static final int ERROR = 0;
 	public static final int LOG = 1;
-	public static final String VERSION = "FlappyEngine v0.0.1 Pre-Alpha";
+	public static final String VERSION = "FlappyEngine v0.1.0 Pre-Alpha";
 	
 	Thread gameThread;
 	

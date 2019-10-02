@@ -84,7 +84,7 @@ public class Shader {
 			return locations.get(name);
 		}
 		int location = GL30.glGetUniformLocation(programID, name);
-		if(location ==  0) FlappyEngine.log("Location for " + name + " was not found", FlappyEngine.ERROR);
+		if(location == -1) FlappyEngine.log("Location for " + name + " was not found", FlappyEngine.ERROR);
 		return location;
 	}
 	
@@ -107,7 +107,7 @@ public class Shader {
 	public void setUniform(String name, Matrix4 value) {
 		FloatBuffer buffer = MemoryUtil.memAllocFloat(Matrix4.SIZE * Matrix4.SIZE);
 		buffer.put(value.getAll()).flip();
-		GL30.glUniform4fv(getUniformLocation(name), buffer);
+		GL30.glUniformMatrix4fv(getUniformLocation(name), true, buffer);
 	}
 	
 	public void setUniform(String name, boolean value) {

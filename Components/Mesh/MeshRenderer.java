@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL30;
 
 import ComponentSystem.FlappyComponent;
 import ComponentSystem.Shader;
+import Maths.Vector3;
 
 public class MeshRenderer extends FlappyComponent {
 	
@@ -30,6 +31,9 @@ public class MeshRenderer extends FlappyComponent {
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, mesh.getIBO());
 		
 		shader.bind();
+		shader.setUniform("transform", parent.transform.getMatrix());
+		shader.setUniform("light", new Vector3(1, 1, 1));
+		
 		GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndices().length, GL11.GL_UNSIGNED_INT, 0);
 		shader.unbind();
 		

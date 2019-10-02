@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import ComponentSystem.FlappyComponent;
 import Core.FlappyEngine;
 import Maths.Transform;
+import Maths.Vector3;
 
 public class Object {
 	
 	public String name;
-	public Transform transform;
+	public Transform transform = new Transform(Vector3.ZERO, Vector3.ZERO, Vector3.ONE);
 	public Object parent;
 	private boolean active = true;
 	public ArrayList<Object> childs = new ArrayList<Object>();
