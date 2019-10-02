@@ -11,6 +11,7 @@ public class FlappyEngine implements Runnable {
 	public static final String VERSION = "FlappyEngine v0.0.1 Pre-Alpha";
 	
 	Thread gameThread;
+	
 	GameLoop loop;
 	Display display;
 	static Scene currentScene;
@@ -34,21 +35,27 @@ public class FlappyEngine implements Runnable {
 	@Override
 	public void run() {
 		start();
+		
 		while(!display.isCloseRequested()) {
 			update();
 			render();
 		}
+		
 		cleanUp();
 	}
 	public void update() {
+		
+		currentScene.Update();
 		loop.Update();
 		display.update();
 	}
 	public void render() {
+		currentScene.Render();
 		loop.Render();
 		display.swapBuffers();
 	}
 	private void cleanUp() {
+		currentScene.Destroy();
 		loop.Destroy();
 		display.destroy();
 		log("Engine shutdown", LOG);

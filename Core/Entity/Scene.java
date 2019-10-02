@@ -1,6 +1,6 @@
 package Entity;
 
-public class Scene extends Object{
+public class Scene extends Object {
 	
 	public String title;
 	

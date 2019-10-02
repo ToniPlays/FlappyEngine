@@ -7,13 +7,18 @@ import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import ComponentSystem.Color;
+import EventSystem.Input;
 import Maths.Vector2;
+import Maths.Vector3;
 
 public class Display {
 	
 	Vector2 size;
 	long window;
 	private boolean wasResized = false;
+	Input input;
+	
 	
 	public Display(Vector2 size) {
 		this.size = size;
@@ -49,16 +54,20 @@ public class Display {
 			}
 		};
 		glfwSetWindowSizeCallback(window, resizeCallback);
+		input = new Input();
+		glfwSetKeyCallback(window, input);
 	}
 	
 	public void update() {
+		input.update();
+		
 		if(wasResized) {
 			GL11.glViewport(0, 0, (int) size.x, (int) size.y);
 			wasResized = false;
 		}
 		
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		setClearColor(Color.WHITE);
 		
 		glfwPollEvents();
 	}
@@ -75,5 +84,12 @@ public class Display {
 
 	public void swapBuffers() {
 		glfwSwapBuffers(window);
+	}
+	public void setClearColor(Color color) {
+		Vector3 c = color.getColor();
+		GL11.glClearColor(c.x, c.y, c.z, 1.0f);
+	}
+	public void setClearColor(Vector3 c) {
+		GL11.glClearColor(c.x, c.y, c.z, 1.0f);
 	}
 }
