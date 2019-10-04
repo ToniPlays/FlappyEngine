@@ -3,17 +3,17 @@ package GameMain;
 
 import org.lwjgl.glfw.GLFW;
 
-import ComponentSystem.Color;
 import ComponentSystem.Shader;
 import Core.FlappyEngine;
 import Core.GameLoop;
 import Core.Time;
+import Entity.Camera;
 import Entity.Object;
 import EventSystem.Input;
+import Loaders.OBJLoader;
 import Maths.Vector3;
 import Mesh.Mesh;
 import Mesh.MeshRenderer;
-import Mesh.Vertex;
 
 public class MainGame extends GameLoop {
 	
@@ -27,38 +27,35 @@ public class MainGame extends GameLoop {
 	public void Start() {
 		Shader shader = new Shader(new String[] {"res/shaders/bgVertex.glsl", "res/shaders/bgFragment.glsl"});
 		object = new Object("Testing");
-		Mesh mesh = new Mesh(new Vertex[] {
-				new Vertex(new Vector3(-0.5f, 0.5f, 0f), new Color(19, 160, 50).getColor()), 
-				new Vertex(new Vector3(-0.5f, -0.5f, 0f), new Color(19, 200, 36).getColor()),
-				new Vertex(new Vector3(0.5f, -0.5f, 0f), new Color(19, 189, 10).getColor()),
-				new Vertex(new Vector3(0.5f, 0.5f, 0f), new Color(19, 150, 36).getColor())
-		}, new int[] {
-				0, 1, 2,
-				0, 3, 2
-		});
+		
+		Mesh mesh = OBJLoader.load("res/models/cube.obj");
+		object.transform.position = new Vector3(0, 0, -20f);
+		object.transform.scale = new Vector3(1f, 1f, 1f);
+
 		object.addComponent(mesh);
 		object.addComponent(new MeshRenderer(shader));
 	}
 
 	@Override
 	public void Update() {
-		float speed = 0.1f;
-		if(Input.getKeyDown(GLFW.GLFW_KEY_SPACE)) {
-			MeshRenderer rd = (MeshRenderer) object.getComponent(MeshRenderer.class);
-			rd.setActive(!rd.isActive());
-		}
-		
+		object.transform.scale = new Vector3(30f, 30f, 3f);
+		float speed = 0.05f;
+		System.out.println(Camera.main.transform.position);
 		if(Input.getKey(GLFW.GLFW_KEY_W)) {
-			object.transform.scale.x += Time.deltaTime * speed * 0.01f;
+			Camera.main.transform.position.x += Time.deltaTime * speed;
 		}
 		if(Input.getKey(GLFW.GLFW_KEY_A)) {
-			object.transform.position.z -= Time.deltaTime * speed;
+			Camera.main.transform.rotation.y -= Time.deltaTime * speed;
 		}
 		if(Input.getKey(GLFW.GLFW_KEY_S)) {
-			object.transform.scale.x -= Time.deltaTime * speed * 0.01f;
+			Camera.main.transform.position.x -= Time.deltaTime * speed;
 		}
 		if(Input.getKey(GLFW.GLFW_KEY_D)) {
-			object.transform.position.z += Time.deltaTime * speed;
+			Camera.main.transform.rotation.y += Time.deltaTime * speed;
+		}
+		if(Input.getKeyDown(GLFW.GLFW_KEY_SPACE)) {
+			object.removeComponent(Mesh.class);
+			object.addComponent(OBJLoader.load("res/models/models.obj"));
 		}
 	}
 
