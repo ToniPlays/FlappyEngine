@@ -14,7 +14,7 @@ import Mesh.Vertex;
 public class OBJLoader {
 	public static Mesh load(String path) {
 		String[] split = path.split("\\.");
-		System.out.println(split[split.length - 1]);
+
 		if (!split[split.length - 1].equals("obj"))
 			FlappyEngine.log("Filetype not supported", FlappyEngine.ERROR);
 
@@ -34,10 +34,12 @@ public class OBJLoader {
 							new Vector3(Float.valueOf(tokens[1]), Float.valueOf(tokens[2]), Float.valueOf(tokens[3])),
 							Color.GREEN));
 				} else if (tokens[0].equals("f")) {
-					String[] splitted = tokens[1].split("/");
-					indicesList.add(Integer.parseInt(splitted[0]) - 1);
-					indicesList.add(Integer.parseInt(splitted[1]) - 1);
-					indicesList.add(Integer.parseInt(splitted[2]) - 1);
+					for (int i = 1; i < tokens.length; i++) {
+						String[] splitted = tokens[i].split("/");
+						indicesList.add(Integer.parseInt(splitted[0]) - 1);
+						indicesList.add(Integer.parseInt(splitted[1]) - 1);
+						indicesList.add(Integer.parseInt(splitted[2]) - 1);
+					}
 					
 				}
 			}

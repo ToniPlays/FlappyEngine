@@ -38,20 +38,20 @@ public class MainGame extends GameLoop {
 
 	@Override
 	public void Update() {
-		object.transform.scale = new Vector3(30f, 30f, 3f);
+		object.transform.scale = new Vector3(40f, 40f, 40f);
 		float speed = 0.05f;
-		System.out.println(Camera.main.transform.position);
+
 		if(Input.getKey(GLFW.GLFW_KEY_W)) {
-			Camera.main.transform.position.x += Time.deltaTime * speed;
+			Camera.main.transform.position.z += Time.deltaTime * speed;
 		}
 		if(Input.getKey(GLFW.GLFW_KEY_A)) {
-			Camera.main.transform.rotation.y -= Time.deltaTime * speed;
-		}
-		if(Input.getKey(GLFW.GLFW_KEY_S)) {
 			Camera.main.transform.position.x -= Time.deltaTime * speed;
 		}
+		if(Input.getKey(GLFW.GLFW_KEY_S)) {
+			Camera.main.transform.position.z -= Time.deltaTime * speed;
+		}
 		if(Input.getKey(GLFW.GLFW_KEY_D)) {
-			Camera.main.transform.rotation.y += Time.deltaTime * speed;
+			Camera.main.transform.position.x += Time.deltaTime * speed;
 		}
 		if(Input.getKeyDown(GLFW.GLFW_KEY_SPACE)) {
 			object.removeComponent(Mesh.class);

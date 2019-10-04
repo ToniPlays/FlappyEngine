@@ -8,7 +8,6 @@ import ComponentSystem.FlappyComponent;
 import ComponentSystem.Shader;
 import Core.FlappyEngine;
 import Entity.Camera;
-import Maths.Matrix4;
 import Maths.Vector3;
 
 public class MeshRenderer extends FlappyComponent {
@@ -23,6 +22,7 @@ public class MeshRenderer extends FlappyComponent {
 		if(!parent.hasComponent(Mesh.class) || shader == null) {
 			return;
 		}
+		
 		Mesh mesh = (Mesh) parent.getComponent(Mesh.class);
 		
 		GL30.glBindVertexArray(mesh.getVAO());

@@ -6,17 +6,21 @@ import static org.lwjgl.opengl.GL30.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.lwjgl.system.MemoryUtil;
 
 import ComponentSystem.FlappyComponent;
+import Maths.Vector3;
 
 public class Mesh extends FlappyComponent {
 	
 	private int vao, pbo, ibo, cbo;
 	private int[] indices;
+	Vertex[] vertices;
 	
 	public Mesh(Vertex[] vertices, int[] indices) {
-		
+		this.vertices = vertices;
 		this.indices = indices;
 		
 		//Generate vertex array
@@ -57,6 +61,7 @@ public class Mesh extends FlappyComponent {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		//System.out.println(this.toString());
 	}
 	
 	public int storeData(FloatBuffer buffer, int index, int size) {
@@ -90,5 +95,18 @@ public class Mesh extends FlappyComponent {
 	}
 	public int[] getIndices() {
 		return indices;
+	}
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		for (Vertex i : vertices) {
+			result.append(i.getPosition().toString()).append("\n");
+		}
+		result.append("\n");
+		for (int i = 0; i < indices.length; i+=3) {
+			result.append(indices[i] + "/").append(indices[i + 1] + "/").append(indices[i + 2] + "\n");
+		}
+		
+		return result.toString();
 	}
 }
