@@ -9,10 +9,10 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryUtil;
 
 import Core.FlappyEngine;
+import Loaders.ShaderLoader;
 import Maths.Matrix4;
 import Maths.Vector2;
 import Maths.Vector3;
-import Shaders.ShaderLoader;
 
 public class Shader {
 	

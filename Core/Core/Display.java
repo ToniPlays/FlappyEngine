@@ -41,11 +41,12 @@ public class Display {
 		
 		glfwShowWindow(window);
 		glfwSwapInterval(0);
+		
 		FlappyEngine.log("Display has been created", FlappyEngine.LOG);
 	}
 	
 	public void createCallbacks() {
-		Matrix4.projection(70f, size.x / size.y, 0f, 1000f);
+		Matrix4.projection(70f, size.x / size.y, 0.1f, 1000f);
 		
 		GLFWWindowSizeCallback resizeCallback = new GLFWWindowSizeCallback() {
 			
@@ -109,7 +110,6 @@ public class Display {
 			glfwSetWindowMonitor(window, glfwGetPrimaryMonitor(), 0, 0, (int) size.x, (int) size.y, 0);
 		}
 		else {
-			
 			glfwSetWindowMonitor(window, 0, (mode.width() - (int) size.x) / 2, (mode.height() - (int) size.y) / 2, mode.width(), mode.height(), 0);
 		}
 	} 

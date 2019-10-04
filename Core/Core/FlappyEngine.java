@@ -1,9 +1,11 @@
 package Core;
 
 import Editor.Editor;
+import Entity.Camera;
 import Entity.Scene;
 import Maths.Matrix4;
 import Maths.Vector2;
+import Maths.Vector3;
 
 public class FlappyEngine implements Runnable {
 
@@ -21,6 +23,7 @@ public class FlappyEngine implements Runnable {
 	int frames = 0;
 	static boolean isFullscreen = false;
 	
+	
 	public FlappyEngine(GameLoop game) {
 		loop = game;
 		gameThread = new Thread(this, "Game");
@@ -32,6 +35,9 @@ public class FlappyEngine implements Runnable {
 	public void start() {
 		display = new Display(new Vector2(1280, 720));
 		currentScene = new Scene("Init scene");
+		Camera camera = new Camera();
+		camera.transform.position = new Vector3(0, 0, -20);
+		
 		loop.Start();
 		FlappyEngine.log("Engine initialization complete", FlappyEngine.LOG);
 	}
@@ -45,7 +51,9 @@ public class FlappyEngine implements Runnable {
 		while(!display.isCloseRequested()) {
 			
 			startTime = System.currentTimeMillis(); 
-			Time.deltaTime = (startTime - frameTime);
+			Time.unscaledDeltaTime = (startTime - frameTime);
+			Time.deltaTime = Time.unscaledDeltaTime * Time.timeScale;
+			Time.time += Time.deltaTime;
 			
 			update();
 			render();
@@ -56,7 +64,7 @@ public class FlappyEngine implements Runnable {
 	public void update() {
 		display.update();
 		
-		time += Time.deltaTime;
+		time += Time.unscaledDeltaTime;
 		frames++;
 		
 		if(time > 200) {
