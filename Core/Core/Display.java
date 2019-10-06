@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 import ComponentSystem.Color;
 import EventSystem.Input;
-import Maths.Matrix4;
+import Maths.Projection;
 import Maths.Vector2;
 import Maths.Vector3;
 
@@ -34,19 +34,22 @@ public class Display {
 		glfwSetWindowPos(window, (mode.width() - (int) size.x) / 2, (mode.height() - (int) size.y) / 2);
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
-		
+		//Enable stuff
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glFrontFace(GL11.GL_CW);
+		GL11.glCullFace(GL11.GL_BACK);
+		GL11.glEnable(GL11.GL_CULL_FACE);
 		
 		createCallbacks();
 		
 		glfwShowWindow(window);
 		glfwSwapInterval(0);
+		new Projection(70f, size.x, size.y, 0.1f, 1000f);
 		
 		FlappyEngine.log("Display has been created", FlappyEngine.LOG);
 	}
 	
 	public void createCallbacks() {
-		Matrix4.projection(70f, size.x / size.y, 0.1f, 1000f);
 		GLFWWindowSizeCallback resizeCallback = new GLFWWindowSizeCallback() {
 			
 			@Override
@@ -54,7 +57,7 @@ public class Display {
 				wasResized = true;
 				size.x = x;
 				size.y = y;
-				Matrix4.projection(70f, size.x / size.y, 0.1f, 1000f);
+				new Projection(70f, size.x, size.y, 0.1f, 1000f);
 			}
 		};
 		glfwSetWindowSizeCallback(window, resizeCallback);

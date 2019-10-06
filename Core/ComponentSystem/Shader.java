@@ -1,16 +1,14 @@
 package ComponentSystem;
 
-import java.nio.FloatBuffer;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.system.MemoryUtil;
 
 import Core.FlappyEngine;
 import Loaders.ShaderLoader;
-import Maths.Matrix4;
+import Maths.Matrix4f;
 import Maths.Vector2;
 import Maths.Vector3;
 
@@ -84,7 +82,8 @@ public class Shader {
 			return locations.get(name);
 		}
 		int location = GL30.glGetUniformLocation(programID, name);
-		if(location == -1) FlappyEngine.log("Location for " + name + " was not found", FlappyEngine.ERROR);
+		if(location == -1) 
+			FlappyEngine.log("Location for " + name + " was not found", FlappyEngine.LOG);
 		return location;
 	}
 	
@@ -104,10 +103,8 @@ public class Shader {
 		GL30.glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
 	}
 	
-	public void setUniform(String name, Matrix4 value) {
-		FloatBuffer buffer = MemoryUtil.memAllocFloat(Matrix4.SIZE * Matrix4.SIZE);
-		buffer.put(value.getAll()).flip();
-		GL30.glUniformMatrix4fv(getUniformLocation(name), true, buffer);
+	public void setUniform(String name, Matrix4f value) {
+		GL30.glUniformMatrix4fv(getUniformLocation(name), true, Matrix4f.getAll(value));
 	}
 	
 	public void setUniform(String name, boolean value) {

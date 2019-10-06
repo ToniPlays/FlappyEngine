@@ -15,7 +15,6 @@ public class Color {
 		color.x = (float) r / 255;
 		color.y = (float) g / 255;
 		color.z = (float) b / 255;
-		System.out.println(color.toString());
 	}
 	public Color(float r, float g, float b) {
 		color.x = r;

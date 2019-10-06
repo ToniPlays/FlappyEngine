@@ -1,9 +1,9 @@
 package Core;
 
+
 import Editor.Editor;
 import Entity.Camera;
 import Entity.Scene;
-import Maths.Matrix4;
 import Maths.Vector2;
 import Maths.Vector3;
 
@@ -21,6 +21,7 @@ public class FlappyEngine implements Runnable {
 	//Initialize engine and start
 	float time = 0;
 	int frames = 0;
+	
 	static boolean isFullscreen = false;
 	
 	public FlappyEngine(GameLoop game) {
@@ -35,7 +36,8 @@ public class FlappyEngine implements Runnable {
 		display = new Display(new Vector2(1280, 720));
 		currentScene = new Scene("Init scene");
 		Camera camera = new Camera();
-		camera.transform.position = new Vector3(0, 0, -20);
+		camera.transform.position = Vector3.ZERO;
+		camera.transform.rotation = Vector3.ZERO;
 
 		loop.Start();
 		FlappyEngine.log("Engine initialization complete", FlappyEngine.LOG);
@@ -45,12 +47,12 @@ public class FlappyEngine implements Runnable {
 	public void run() {
 		start();
 		long startTime = System.currentTimeMillis();
-		long frameTime = 0;
+		long frameTime = startTime;
 				
 		while(!display.isCloseRequested()) {
 			
 			startTime = System.currentTimeMillis(); 
-			Time.unscaledDeltaTime = (startTime - frameTime);
+			Time.unscaledDeltaTime = (startTime - frameTime) / Time.SECOND;
 			Time.deltaTime = Time.unscaledDeltaTime * Time.timeScale;
 			Time.time += Time.deltaTime;
 			
@@ -61,13 +63,14 @@ public class FlappyEngine implements Runnable {
 		cleanUp();
 	}
 	public void update() {
+		float updates = 10;
 		display.update();
 		
 		time += Time.unscaledDeltaTime;
 		frames++;
 		
-		if(time > 200) {
-			setTitle("Fps: " + frames * 5);
+		if(time > 1 / updates) {
+			setTitle("Fps: " + frames * updates);
 			time = 0;
 			frames = 0;
 		}
@@ -94,6 +97,7 @@ public class FlappyEngine implements Runnable {
 	public static void log(String text, int i) {
 		
 		String log = java.time.LocalTime.now() + ": " + text;
+		
 		if(i == ERROR) {
 			System.err.println(log);
 			System.exit(0);
@@ -113,8 +117,8 @@ public class FlappyEngine implements Runnable {
 		return isFullscreen;
 	}
 
-	public static Matrix4 getProjection() {
+	/*public static Matrix4 getProjection() {
 		float ar = display.size.x / display.size.y;
 		return Matrix4.projection(70f, ar, 0.1f, 1000f);
-	}
+	}*/
 }

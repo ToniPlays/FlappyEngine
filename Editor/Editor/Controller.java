@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import ComponentSystem.FlappyComponent;
 import Core.FlappyEngine;
-import Entity.Object;
+import Entity.GameObject;
 import Entity.Scene;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,7 +24,7 @@ public class Controller {
 	@FXML
 	Label sceneName;
 	@FXML
-	TreeView<Object> hierarchy;
+	TreeView<GameObject> hierarchy;
 	@FXML
 	VBox listBox;
 	@FXML
@@ -34,19 +34,19 @@ public class Controller {
 		Scene scene = FlappyEngine.getCurrentScene();
 		sceneName.setText(scene.title);
 		
-		TreeItem<Object> root = new TreeItem<Object>(scene);
+		TreeItem<GameObject> root = new TreeItem<GameObject>(scene);
 		root.setExpanded(true);
 		hierarchy.setRoot(root);
 		
-		for (Object child : scene.childs) {
+		for (GameObject child : scene.childs) {
 			loopChilds(child, root);
 		}
 		
-		hierarchy.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<Object>>() {
+		hierarchy.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<GameObject>>() {
 
 			@Override
-			public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue,
-					TreeItem<Object> newValue) {
+			public void changed(ObservableValue<? extends TreeItem<GameObject>> observable, TreeItem<GameObject> oldValue,
+					TreeItem<GameObject> newValue) {
 				if(newValue == null) return;
 				
 				update.setSelected(false);
@@ -66,13 +66,14 @@ public class Controller {
 			}
 		});
 	}
-	public void loopChilds(Object p, TreeItem<Object> parent) {
+	public void loopChilds(GameObject p, TreeItem<GameObject> parent) {
 		
-		TreeItem<Object> childTI = new TreeItem<Object>(p);
+		TreeItem<GameObject> childTI = new TreeItem<GameObject>(p);
 		childTI.setExpanded(true);
 		parent.getChildren().add(childTI);
-		for (Object child : p.childs) {
-			TreeItem<Object> c = new TreeItem<Object>(child);
+		
+		for (GameObject child : p.childs) {
+			TreeItem<GameObject> c = new TreeItem<GameObject>(child);
 			c.setExpanded(true);
 			
 			if(child.childs.size() > 0) {
@@ -81,7 +82,7 @@ public class Controller {
 			parent.getChildren().add(c);
 		}
 	}
-	public void openObject(Object object) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
+	public void openObject(GameObject object) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		
 		Field[] fields = object.getClass().getFields();
 		fields = Arrays.stream(fields).distinct().toArray(Field[]::new);

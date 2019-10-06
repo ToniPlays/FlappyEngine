@@ -1,10 +1,10 @@
 package ComponentSystem;
 
-import Entity.Object;
+import Entity.GameObject;
 
 public class FlappyComponent {
 	
-	public Object parent;
+	public GameObject gameObject;
 	boolean active = true;
 
 	public void OnEnable() {

@@ -36,24 +36,19 @@ public class OBJLoader {
 					for (int i = 1; i < tokens.length; i++) {
 						String[] splitted = tokens[i].split("/");
 						indicesList.add(Integer.parseInt(splitted[0]) - 1);
-						indicesList.add(Integer.parseInt(splitted[1]) - 1);
-						indicesList.add(Integer.parseInt(splitted[2]) - 1);
 					}
 
 				}
 			}
-
 			rd.close();
-
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 
 		Vertex[] vertices = new Vertex[verticesList.size()];
 		Integer[] indices = new Integer[indicesList.size()];
 
-		// System.out.println("Loaded mesh with " + vertices.length + ", indices " +
-		// indices.length);
+		System.out.println("Loaded mesh with " + vertices.length + ", indices " + indices.length);
 		verticesList.toArray(vertices);
 		indicesList.toArray(indices);
 
