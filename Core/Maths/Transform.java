@@ -1,5 +1,7 @@
 package Maths;
 
+import Entity.Camera;
+
 public class Transform {
 	
 	public Vector3 position, rotation, scale;
@@ -31,16 +33,17 @@ public class Transform {
 		rotation = GetLookAtRotation(point, up);
 	}*/
 
-	public Quaternion GetLookAtRotation(Vector3 point, Vector3 up)
+	/*public Quaternion GetLookAtRotation(Vector3 point, Vector3 up)
 	{
 		return new Quaternion(new Matrix4f().InitRotation(Vector3.normalize(point.sub(position)), up));
-	}
+	}*/
 	public Matrix4f getProjectedTransform() {
 		
 		Matrix4f transform = getMatrix();
 		Matrix4f projection = Projection.getProjection();
-		
-		return projection.Mul(transform);
+		Matrix4f cameraRot = new Matrix4f().InitRotation(Camera.main.transform.rotation);
+		Matrix4f cameraPos = new Matrix4f().InitTranslation(Camera.main.transform.getPos());
+		return projection.Mul(cameraRot.Mul(cameraPos.Mul(transform)));
 	}
 	public Matrix4f getMatrix()
 	{
@@ -49,5 +52,12 @@ public class Transform {
 		Matrix4f scaleMatrix = new Matrix4f().InitScale(scale.x, scale.y, scale.z);
 
 		return translationMatrix.Mul(rotationMatrix.Mul(scaleMatrix));
+	}
+	public Vector3 getPos() {
+		return position;
+	}
+	@Override
+	public String toString() {
+		return position.toString();
 	}
 }

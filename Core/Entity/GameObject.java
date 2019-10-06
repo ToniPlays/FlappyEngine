@@ -93,4 +93,8 @@ public class GameObject {
 			}
 		}
 	}
+	@Override
+	public String toString() {
+		return "Gamobject " + name + " of type (" + this.getClass().getSimpleName() + ")";
+	}
 }

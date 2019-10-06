@@ -72,14 +72,14 @@ public class Vector3 {
 						axis.mul(this.dot(axis.mul(1 - cosAngle))))); //Rotation on local Y
 	}
 	
-	public Vector3 Rotate(Quaternion rotation)
+	/*public Vector3 Rotate(Quaternion rotation)
 	{
 		Quaternion conjugate = rotation.Conjugate();
 
 		Quaternion w = rotation.Mul(this).Mul(conjugate);
 
 		return new Vector3(w.GetX(), w.GetY(), w.GetZ());
-	}
+	}*/
 	
 	public Vector3 Add(Vector3 r)
 	{

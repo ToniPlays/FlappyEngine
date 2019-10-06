@@ -8,4 +8,6 @@ public class Scene extends GameObject {
 		super(null, name);
 		title = name;
 	}
+	void update() {
+	}
 }

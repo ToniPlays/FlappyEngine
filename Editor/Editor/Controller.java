@@ -29,6 +29,7 @@ public class Controller {
 	VBox listBox;
 	@FXML
 	CheckBox update;
+	public GameObject selected;
 	
 	void updateHierarchy() {
 		Scene scene = FlappyEngine.getCurrentScene();
@@ -49,7 +50,6 @@ public class Controller {
 					TreeItem<GameObject> newValue) {
 				if(newValue == null) return;
 				
-				update.setSelected(false);
 				try {
 					openObject(newValue.getValue());
 				} catch (IllegalArgumentException e) {
@@ -84,6 +84,7 @@ public class Controller {
 	}
 	public void openObject(GameObject object) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		
+		selected = object;
 		Field[] fields = object.getClass().getFields();
 		fields = Arrays.stream(fields).distinct().toArray(Field[]::new);
 		

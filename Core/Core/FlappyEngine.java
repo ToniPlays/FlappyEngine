@@ -78,7 +78,6 @@ public class FlappyEngine implements Runnable {
 		loop.Update();
 	}
 	public void render() {
-		
 		currentScene.Render();
 		loop.Render();
 		display.swapBuffers();
@@ -117,8 +116,4 @@ public class FlappyEngine implements Runnable {
 		return isFullscreen;
 	}
 
-	/*public static Matrix4 getProjection() {
-		float ar = display.size.x / display.size.y;
-		return Matrix4.projection(70f, ar, 0.1f, 1000f);
-	}*/
 }

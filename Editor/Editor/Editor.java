@@ -33,6 +33,20 @@ public class Editor extends Application implements Runnable {
 		                    @Override
 		                    public void run() {
 		                        controller.updateHierarchy();
+		                        if(controller.selected != null) {
+		                        	try {
+										controller.openObject(controller.selected);
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (ClassNotFoundException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+		                        }
 		                    }
 		                };
 

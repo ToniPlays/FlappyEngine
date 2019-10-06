@@ -51,7 +51,8 @@ public class OBJLoader {
 		System.out.println("Loaded mesh with " + vertices.length + ", indices " + indices.length);
 		verticesList.toArray(vertices);
 		indicesList.toArray(indices);
-
-		return new Mesh(vertices, Utils.toIntArray(indices));
+		Mesh mesh = new Mesh(vertices, Utils.toIntArray(indices));
+		mesh.fileName = path;
+		return mesh;
 	}
 }

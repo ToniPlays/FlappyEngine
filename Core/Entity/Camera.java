@@ -1,5 +1,6 @@
 package Entity;
 
+
 public class Camera extends GameObject {
 	
 	public static Camera main;
@@ -7,6 +8,5 @@ public class Camera extends GameObject {
 	public Camera() {
 		super("Camera");
 		main = this;
-		
 	}
 }

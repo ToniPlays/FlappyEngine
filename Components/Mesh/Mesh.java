@@ -16,6 +16,7 @@ public class Mesh extends FlappyComponent {
 	private int vao, pbo, ibo, cbo;
 	private int[] indices;
 	Vertex[] vertices;
+	public String fileName = "";
 	
 	public Mesh(Vertex[] vertices, int[] indices) {
 		this.vertices = vertices;
@@ -93,7 +94,7 @@ public class Mesh extends FlappyComponent {
 	public int[] getIndices() {
 		return indices;
 	}
-	@Override
+	/*@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
 		for (Vertex i : vertices) {
@@ -105,5 +106,8 @@ public class Mesh extends FlappyComponent {
 		}
 		
 		return result.toString();
+	}*/
+	public String toString() {
+		return "Mesh from " + fileName;
 	}
 }

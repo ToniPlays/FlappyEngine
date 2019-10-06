@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import ComponentSystem.Color;
+import Entity.Camera;
 import EventSystem.Input;
 import Maths.Projection;
 import Maths.Vector2;
