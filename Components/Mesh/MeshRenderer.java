@@ -17,6 +17,7 @@ public class MeshRenderer extends FlappyComponent {
 	public MeshRenderer(Shader shader) {
 		this.shader = shader;
 	}
+	
 	@Override
 	public void Render() {
 		if(!parent.hasComponent(Mesh.class) || shader == null) {

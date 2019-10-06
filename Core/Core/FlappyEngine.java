@@ -11,7 +11,7 @@ public class FlappyEngine implements Runnable {
 
 	public static final int ERROR = 0;
 	public static final int LOG = 1;
-	public static final String VERSION = "FlappyEngine v0.1.0 Pre-Alpha";
+	public static final String VERSION = "FlappyEngine v0.2.0 Pre-Alpha";
 	
 	Thread gameThread;
 	
@@ -22,7 +22,6 @@ public class FlappyEngine implements Runnable {
 	float time = 0;
 	int frames = 0;
 	static boolean isFullscreen = false;
-	
 	
 	public FlappyEngine(GameLoop game) {
 		loop = game;
@@ -37,7 +36,7 @@ public class FlappyEngine implements Runnable {
 		currentScene = new Scene("Init scene");
 		Camera camera = new Camera();
 		camera.transform.position = new Vector3(0, 0, -20);
-		
+
 		loop.Start();
 		FlappyEngine.log("Engine initialization complete", FlappyEngine.LOG);
 	}

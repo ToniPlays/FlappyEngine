@@ -31,8 +31,7 @@ public class OBJLoader {
 					continue;
 				else if (tokens[0].equals("v")) {
 					verticesList.add(new Vertex(
-							new Vector3(Float.valueOf(tokens[1]), Float.valueOf(tokens[2]), Float.valueOf(tokens[3])),
-							Color.GREEN));
+							new Vector3(Float.valueOf(tokens[1]), Float.valueOf(tokens[2]), Float.valueOf(tokens[3])), Color.BLUE));
 				} else if (tokens[0].equals("f")) {
 					for (int i = 1; i < tokens.length; i++) {
 						String[] splitted = tokens[i].split("/");
@@ -40,7 +39,7 @@ public class OBJLoader {
 						indicesList.add(Integer.parseInt(splitted[1]) - 1);
 						indicesList.add(Integer.parseInt(splitted[2]) - 1);
 					}
-					
+
 				}
 			}
 
@@ -49,13 +48,15 @@ public class OBJLoader {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+
 		Vertex[] vertices = new Vertex[verticesList.size()];
 		Integer[] indices = new Integer[indicesList.size()];
 
-		System.out.println("Loaded mesh with " + vertices.length + ", indices " + indices.length);
+		// System.out.println("Loaded mesh with " + vertices.length + ", indices " +
+		// indices.length);
 		verticesList.toArray(vertices);
 		indicesList.toArray(indices);
-		
+
 		return new Mesh(vertices, Utils.toIntArray(indices));
 	}
 }

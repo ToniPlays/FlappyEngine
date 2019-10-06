@@ -47,7 +47,6 @@ public class Display {
 	
 	public void createCallbacks() {
 		Matrix4.projection(70f, size.x / size.y, 0.1f, 1000f);
-		
 		GLFWWindowSizeCallback resizeCallback = new GLFWWindowSizeCallback() {
 			
 			@Override

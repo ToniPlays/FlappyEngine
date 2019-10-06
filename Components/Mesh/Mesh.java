@@ -6,12 +6,10 @@ import static org.lwjgl.opengl.GL30.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import javax.naming.spi.DirStateFactory.Result;
 
 import org.lwjgl.system.MemoryUtil;
 
 import ComponentSystem.FlappyComponent;
-import Maths.Vector3;
 
 public class Mesh extends FlappyComponent {
 	
@@ -61,7 +59,6 @@ public class Mesh extends FlappyComponent {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indiceBuffer, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		//System.out.println(this.toString());
 	}
 	
 	public int storeData(FloatBuffer buffer, int index, int size) {
