@@ -7,6 +7,7 @@ import ComponentSystem.FlappyComponent;
 import Core.FlappyEngine;
 import Entity.GameObject;
 import Entity.Scene;
+import Maths.Transform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -39,7 +40,7 @@ public class Controller {
 		root.setExpanded(true);
 		hierarchy.setRoot(root);
 		
-		for (GameObject child : scene.childs) {
+		for (Transform child : scene.transform.childs) {
 			loopChilds(child, root);
 		}
 		
@@ -66,22 +67,21 @@ public class Controller {
 			}
 		});
 	}
-	public void loopChilds(GameObject p, TreeItem<GameObject> parent) {
+	
+	public void loopChilds(Transform p, TreeItem<GameObject> parent) {
 		
-		TreeItem<GameObject> childTI = new TreeItem<GameObject>(p);
+		TreeItem<GameObject> childTI = new TreeItem<GameObject>(p.gameObject);
 		childTI.setExpanded(true);
-		parent.getChildren().add(childTI);
 		
-		for (GameObject child : p.childs) {
-			TreeItem<GameObject> c = new TreeItem<GameObject>(child);
+		for (Transform transform : p.childs) {
+			TreeItem<GameObject> c = new TreeItem<GameObject>(transform.gameObject);
 			c.setExpanded(true);
-			
-			if(child.childs.size() > 0) {
-				loopChilds(child, c);
-			}
-			parent.getChildren().add(c);
+			childTI.getChildren().add(c);
 		}
+		
+		parent.getChildren().add(childTI);
 	}
+	
 	public void openObject(GameObject object) throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		
 		selected = object;

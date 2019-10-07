@@ -1,12 +1,19 @@
 package Maths;
 
+import java.util.ArrayList;
+
 import Entity.Camera;
+import Entity.GameObject;
 
 public class Transform {
 	
-	public Vector3 position = Vector3.ZERO;
-	public Vector3 rotation = Vector3.ZERO;
+	public Transform parent;
+	public GameObject gameObject;
+	public Vector3 position = Vector3.ONE;
+	public Vector3 rotation = Vector3.ONE;
 	public Vector3 scale = Vector3.ONE;
+	
+	public ArrayList<Transform> childs = new ArrayList<Transform>();
 	
 	public Transform()
 	{
@@ -25,38 +32,40 @@ public class Transform {
 			this.scale = scale;
 	}
 	
-	/*public void Rotate(Vector3 axis, float angle)
-	{
-		rotation = new Quaternion(axis, angle).Mul(rotation).Normalized();
-	}
-
-	public void LookAt(Vector3 point, Vector3 up)
-	{
-		rotation = GetLookAtRotation(point, up);
-	}*/
-
-	/*public Quaternion GetLookAtRotation(Vector3 point, Vector3 up)
-	{
-		return new Quaternion(new Matrix4f().InitRotation(Vector3.normalize(point.sub(position)), up));
-	}*/
 	public Matrix4f getProjectedTransform() {
 		
 		Matrix4f transform = getMatrix();
 		Matrix4f projection = Projection.getProjection();
 		Matrix4f cameraRot = new Matrix4f().InitRotation(Camera.main.transform.rotation);
 		Matrix4f cameraPos = new Matrix4f().InitTranslation(Camera.main.transform.position);
+
 		return projection.Mul(cameraRot.Mul(cameraPos.Mul(transform)));
 	}
+	
 	public Matrix4f getMatrix()
 	{
 		Matrix4f translationMatrix = new Matrix4f().InitTranslation(position);
 		Matrix4f rotationMatrix = new Matrix4f().InitRotation(rotation);
 		Matrix4f scaleMatrix = new Matrix4f().InitScale(scale.x, scale.y, scale.z);
-
-		return translationMatrix.Mul(rotationMatrix.Mul(scaleMatrix));
+		Matrix4f parentMatrix4f = new Matrix4f().InitIdentity();
+		
+		if(parent != null) 
+			parentMatrix4f = parent.getMatrix();
+		
+		return parentMatrix4f.Mul(translationMatrix.Mul(rotationMatrix.Mul(scaleMatrix)));
 	}
 	@Override
 	public String toString() {
-		return position.toString();
+		String line = "";
+		if(parent.gameObject != null)
+			line += "Parent " + parent.gameObject.name + "\n";
+		line += "Position: " + position.toString() + "\n";
+		line += "Rotation: " + rotation.toString() + "\n";
+		line += "Scale: " + scale.toString() + "\n";
+		
+		for (Transform transform : childs) {
+			line += transform.gameObject.name + "\n";
+		}
+		return line;
 	}
 }

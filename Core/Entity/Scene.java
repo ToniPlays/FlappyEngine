@@ -5,7 +5,8 @@ public class Scene extends GameObject {
 	public String title;
 	
 	public Scene(String name) {
-		super(null, name);
+		
+		super(name);
 		title = name;
 	}
 }

@@ -48,7 +48,6 @@ public class OBJLoader {
 		Vertex[] vertices = new Vertex[verticesList.size()];
 		Integer[] indices = new Integer[indicesList.size()];
 
-		System.out.println("Loaded mesh with " + vertices.length + ", indices " + indices.length);
 		verticesList.toArray(vertices);
 		indicesList.toArray(indices);
 		Mesh mesh = new Mesh(vertices, Utils.toIntArray(indices));

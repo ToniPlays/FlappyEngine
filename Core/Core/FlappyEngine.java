@@ -2,16 +2,14 @@ package Core;
 
 
 import Editor.Editor;
-import Entity.Camera;
 import Entity.Scene;
 import Maths.Vector2;
-import Maths.Vector3;
 
 public class FlappyEngine implements Runnable {
 
 	public static final int ERROR = 0;
 	public static final int LOG = 1;
-	public static final String VERSION = "FlappyEngine v0.2.0 Pre-Alpha";
+	public static final String VERSION = "FlappyEngine v0.3.0 Pre-Alpha";
 	
 	Thread gameThread;
 	
@@ -35,10 +33,7 @@ public class FlappyEngine implements Runnable {
 	public void start() {
 		display = new Display(new Vector2(1280, 720));
 		currentScene = new Scene("Init scene");
-		Camera camera = new Camera();
-		camera.transform.position = Vector3.ZERO;
-		camera.transform.rotation = Vector3.ZERO;
-
+		
 		loop.Start();
 		FlappyEngine.log("Engine initialization complete", FlappyEngine.LOG);
 	}
@@ -116,5 +111,4 @@ public class FlappyEngine implements Runnable {
 	public static boolean fullscreen() {
 		return isFullscreen;
 	}
-
 }

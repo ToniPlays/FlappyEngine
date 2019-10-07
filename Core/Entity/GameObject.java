@@ -9,27 +9,36 @@ import Maths.Vector3;
 
 public class GameObject {
 	
-	public String name;
+	public String name = "GameObject";
 	public Transform transform = new Transform(Vector3.ZERO, Vector3.ZERO, Vector3.ONE);
-	public GameObject parent;
-	private boolean active = true;
-	public ArrayList<GameObject> childs = new ArrayList<GameObject>();
 	public ArrayList<FlappyComponent> components = new ArrayList<FlappyComponent>();
 	
+	private boolean active = true;
 	
-	public GameObject(GameObject parent, String name) {
-		
-		if(this.getClass() != Scene.class)
-			parent.childs.add(this);
-		
+	
+	public GameObject(Transform parent, String name) {
 		this.name = name;
-		this.parent = parent;
+		this.transform.parent = parent;
+		this.transform.gameObject = this;
+		
+		if(this.getClass() != Scene.class) {
+			transform.parent.childs.add(transform);	
+		}
 	}
 	
 	public GameObject(String name) {
 		this.name = name;
-		this.parent = FlappyEngine.getCurrentScene();
-		parent.childs.add(this);
+		
+		if(this.getClass() == Scene.class) {
+			this.transform.parent = new Transform();
+		}
+		else 
+			this.transform.parent = FlappyEngine.getCurrentScene().transform;
+		
+		this.transform.gameObject = this;
+		transform.parent.childs.add(transform);
+		
+		System.out.println(name + " parent " + transform.parent.gameObject);
 	}
 	
 	public void Update() {
@@ -37,9 +46,10 @@ public class GameObject {
 			if(component.isActive())
 				component.Update();
 		}
-		for (GameObject child : childs) {
-			if(child.active)
-				child.Update();
+		
+		for (Transform child : transform.childs) {
+			if(child.gameObject.active)
+				child.gameObject.Update();
 		}
 	}
 	
@@ -48,9 +58,9 @@ public class GameObject {
 			if(component.isActive())
 				component.Render();
 		}
-		for (GameObject child : childs) {
-			if(child.active)
-				child.Render();
+		for (Transform child : transform.childs) {
+			if(child.gameObject.active)
+				child.gameObject.Render();
 		}
 	}
 	
@@ -58,8 +68,8 @@ public class GameObject {
 		for (FlappyComponent component : components) {
 			component.Destroy();
 		}
-		for (GameObject child : childs) {
-			child.Destroy();
+		for (Transform child : transform.childs) {
+			child.gameObject.Destroy();
 		}
 	}
 	public void addComponent(FlappyComponent component) {
@@ -93,6 +103,7 @@ public class GameObject {
 			}
 		}
 	}
+	
 	@Override
 	public String toString() {
 		return "Gamobject " + name + " of type (" + this.getClass().getSimpleName() + ")";
