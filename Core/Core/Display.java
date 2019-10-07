@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import ComponentSystem.Color;
-import Entity.Camera;
 import EventSystem.Input;
 import Maths.Projection;
 import Maths.Vector2;
@@ -44,7 +43,7 @@ public class Display {
 		createCallbacks();
 		
 		glfwShowWindow(window);
-		glfwSwapInterval(0);
+		glfwSwapInterval(1);
 		new Projection(70f, size.x, size.y, 0.1f, 1000f);
 		
 		FlappyEngine.log("Display has been created", FlappyEngine.LOG);

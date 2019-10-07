@@ -31,6 +31,7 @@ public class MeshRenderer extends FlappyComponent {
 		
 		shader.bind();
 		shader.setUniform("transform", gameObject.transform.getProjectedTransform());
+		
 		GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndices().length, GL11.GL_UNSIGNED_INT, 0);
 		shader.unbind();
 		

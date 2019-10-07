@@ -63,7 +63,7 @@ public class FlappyEngine implements Runnable {
 		cleanUp();
 	}
 	public void update() {
-		float updates = 10;
+		float updates = 1;
 		display.update();
 		
 		time += Time.unscaledDeltaTime;
@@ -74,6 +74,7 @@ public class FlappyEngine implements Runnable {
 			time = 0;
 			frames = 0;
 		}
+		
 		currentScene.Update();
 		loop.Update();
 	}

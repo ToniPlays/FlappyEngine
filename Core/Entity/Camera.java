@@ -7,6 +7,7 @@ public class Camera extends GameObject {
 	
 	public Camera() {
 		super("Camera");
+		parent = null;
 		main = this;
 	}
 }

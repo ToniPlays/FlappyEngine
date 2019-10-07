@@ -1,3 +1,6 @@
+/*
+Engine main, for testing purposes only
+*/
 package GameMain;
 
 import org.lwjgl.glfw.GLFW;

@@ -4,7 +4,9 @@ import Entity.Camera;
 
 public class Transform {
 	
-	public Vector3 position, rotation, scale;
+	public Vector3 position = Vector3.ZERO;
+	public Vector3 rotation = Vector3.ZERO;
+	public Vector3 scale = Vector3.ONE;
 	
 	public Transform()
 	{
@@ -42,7 +44,7 @@ public class Transform {
 		Matrix4f transform = getMatrix();
 		Matrix4f projection = Projection.getProjection();
 		Matrix4f cameraRot = new Matrix4f().InitRotation(Camera.main.transform.rotation);
-		Matrix4f cameraPos = new Matrix4f().InitTranslation(Camera.main.transform.getPos());
+		Matrix4f cameraPos = new Matrix4f().InitTranslation(Camera.main.transform.position);
 		return projection.Mul(cameraRot.Mul(cameraPos.Mul(transform)));
 	}
 	public Matrix4f getMatrix()
@@ -52,9 +54,6 @@ public class Transform {
 		Matrix4f scaleMatrix = new Matrix4f().InitScale(scale.x, scale.y, scale.z);
 
 		return translationMatrix.Mul(rotationMatrix.Mul(scaleMatrix));
-	}
-	public Vector3 getPos() {
-		return position;
 	}
 	@Override
 	public String toString() {
